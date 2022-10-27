@@ -11,6 +11,7 @@
   "dependencies": {
     "@lint-md/core": "2.0.0-beta.8",
     "@monaco-editor/react": "^4.4.6",
+    "monaco-editor": "^0.34.1",
     "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
