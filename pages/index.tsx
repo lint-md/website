@@ -1,11 +1,12 @@
-import Editor, {EditorProps, Monaco} from '@monaco-editor/react'
-import type {NextPage} from 'next'
-import styles from '../styles/Home.module.css'
-import {lintMarkdown} from "@lint-md/core";
-// @ts-ignore
-import demoContent from './demo.md'
-import {editor} from "monaco-editor";
-import {useState} from "react";
+import type { EditorProps, Monaco } from '@monaco-editor/react';
+import Editor from '@monaco-editor/react';
+import type { NextPage } from 'next';
+import { lintMarkdown } from '@lint-md/core';
+// @ts-expect-error
+import type { editor } from 'monaco-editor';
+import { useState } from 'react';
+import styles from '../styles/Home.module.css';
+import demoContent from './demo.md';
 
 export const EDITOR_DEFAULT_OPTIONS: EditorProps['options'] = {
   automaticLayout: true,
@@ -13,7 +14,7 @@ export const EDITOR_DEFAULT_OPTIONS: EditorProps['options'] = {
   fontSize: 14,
   fixedOverflowWidgets: true,
   unicodeHighlight: {
-    ambiguousCharacters: false
+    ambiguousCharacters: false,
   },
   theme: 'vs-dark',
   scrollbar: {
@@ -40,9 +41,9 @@ const Home: NextPage = () => {
   const initEditorMarker = (monaco: Monaco, editor: editor.IStandaloneCodeEditor, markdown: string) => {
     const model = editor.getModel();
     if (model) {
-      const {lintResult} = lintMarkdown(markdown);
+      const { lintResult } = lintMarkdown(markdown);
       const markers = lintResult.map((item) => {
-        const {loc: {start, end}, message} = item;
+        const { loc: { start, end }, message } = item;
         return {
           severity: monaco.MarkerSeverity.Error,
           startLineNumber: start.line,
@@ -51,11 +52,11 @@ const Home: NextPage = () => {
           endColumn: end.column,
           message,
         };
-      })
+      });
 
       monaco.editor.setModelMarkers(model, 'lint-md', markers);
     }
-  }
+  };
 
   return (
     <div className={styles.container}>
@@ -68,7 +69,7 @@ const Home: NextPage = () => {
             const model = editor.getModel();
             model?.onDidChangeContent(() => {
               initEditorMarker(monaco, editor, editor.getValue());
-            })
+            });
           }}
           height="100%"
           language={'markdown'}
@@ -76,7 +77,7 @@ const Home: NextPage = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
